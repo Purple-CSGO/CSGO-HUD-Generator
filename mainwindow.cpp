@@ -1,10 +1,5 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QPen>
-#include <QPainter>
-#include <QSettings>
-#include <QDebug>
-#include <QTranslator>
 #pragma execution_character_set("utf-8")
 
 //定义变量
@@ -15,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+//    QTranslator m;
+//    m.load(":/En_US.qm");
+//    qApp->installTranslator(&m);
+//    ui->retranslateUi(this);
 
     ui->heightlabel->setText( tr("高: ") );
     ui->widthlabel->setText( tr("宽: ") );
@@ -28,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     QStringList strList;
     strList <<tr("绿色")<<tr("红色")<<tr("蓝色")<<tr("白色")<<tr("青色");
     ui->colorBox->addItems(strList);
+
 
     //读取设置
     readSetting();
@@ -112,7 +112,14 @@ return ','.join(data)
 //    painter.setFont(font1);
 //    painter.drawText(image.rect(),Qt::AlignCenter,"Hello");
 */
-    qDebug() << image.save("C:/Users/Purp1e/Desktop/test.png", "PNG");
+
+    QString tPath = QFileDialog::getSaveFileName(this, tr("请选择保存的位置"), "", tr("图片 (*.png)"));
+    if( tPath.isEmpty() ){
+        return;
+    }
+    qDebug() << tPath;
+    qDebug() << image.save( tPath , "PNG");
+    QMessageBox::about(NULL, tr("提示"), tr("保存成功"));
 }
 
 //保存设置
@@ -149,11 +156,11 @@ void MainWindow::readSetting()
     QSettings *iniRead = new QSettings("./config.ini", QSettings::IniFormat);
     iniRead->setIniCodec("utf-8");     //解决乱码问题
     int t = 0;
-    height = 1080, width = 1920, size =3, gap = 1, thickness = 2, color = 0;
+    height = 1080, width = 1920, size =3, gap = -1, thickness = 2, color = 0;
+
     //iniRead->beginGroup("  ");
     t = iniRead->value("height").toInt();
     if( t )    height  = t;
-    //else height =666;
     t = iniRead->value("width").toInt();
     if( t )    width  = t;
     t = iniRead->value("size").toInt();

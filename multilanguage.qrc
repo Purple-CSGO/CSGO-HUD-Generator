@@ -1,2 +1,8 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/">
+        <file>en_US.qm</file>
+        <file>en_US.ts</file>
+        <file>zh_CN.qm</file>
+        <file>zh_CN.ts</file>
+    </qresource>
+</RCC>

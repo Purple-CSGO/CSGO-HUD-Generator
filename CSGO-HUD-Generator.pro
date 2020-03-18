@@ -29,9 +29,19 @@ VERSION = 0.1
 QMAKE_TARGET_PRODUCT = "CSGO HUD Generator"
 QMAKE_PROJECT_NAME = "CSGO HUD Generator"
 
+TRANSLATIONS += zh_CN.ts\
+                                  en_US.ts
+
 RC_CODEPAGE = 65001
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    en_US.qm \
+    zh_CN.qm
+
+RESOURCES += \
+    multilanguage.qrc
